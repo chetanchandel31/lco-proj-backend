@@ -54,10 +54,11 @@ userSchema
     this.encry_password = this.securePassword(password);
   });
 
-schema.method({
+userSchema.methods = {
   authenticate: function (plainPassword) {
     return this.securePassword(plainPassword) === this.encry_password;
   },
+
   securePassword: function (plainPassword) {
     if (!plainPassword) return "";
     try {
@@ -69,6 +70,6 @@ schema.method({
       return "";
     }
   },
-});
+};
 
 module.exports = mongoose.model("User", userSchema);
