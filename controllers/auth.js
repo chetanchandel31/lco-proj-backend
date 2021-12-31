@@ -43,7 +43,7 @@ exports.signin = (req, res) => {
     }
 
     if (!user.authenticate(password)) {
-      return res.status(401).json({ error: "Email and password don't match" });
+      return res.status(401).json({ error: "incorrect password" });
     }
 
     // create token
@@ -58,6 +58,36 @@ exports.signin = (req, res) => {
 };
 
 exports.signout = (req, res) => {
-  res.clearCookie("token");
+  res.clearCookie("token"); // clear cookie from user's browser
   res.json({ message: "user signed out successfully" });
+};
+
+// protected route
+exports.isSignedIn = expressJwt({
+  secret: process.env.SECRET,
+  userProperty: "auth",
+});
+
+// custom middleware
+exports.isAuthenticated = (req, res, next) => {
+  // req.auth comes from express validator and req.profile comes from getUserById (middleware running before all user routes)
+  let checker = req.profile && req.auth && req.profile._id == req.auth._id;
+
+  if (!checker) {
+    return res.status(403).json({
+      error: "ACCESS DENIED",
+    });
+  }
+  next();
+};
+
+exports.isAdmin = (req, res, next) => {
+  if (req.profile.role === 0) {
+    // ideally should check user's role from db instead of what's coming from FE
+    return res.status(403).json({
+      error: "You are not admin, access denied",
+    });
+  }
+
+  next();
 };

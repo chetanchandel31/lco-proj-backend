@@ -1,4 +1,4 @@
-const { signout, signup, signin } = require("../controllers/auth");
+const { signout, signup, signin, isSignedIn } = require("../controllers/auth");
 const express = require("express");
 const { body } = require("express-validator");
 
@@ -23,5 +23,10 @@ router.post(
 );
 
 router.get("/signout", signout);
+
+// protected route
+router.get("/testroute", isSignedIn, (req, res) => {
+  res.json(req.auth);
+});
 
 module.exports = router;
