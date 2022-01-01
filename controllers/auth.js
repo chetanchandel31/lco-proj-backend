@@ -72,6 +72,7 @@ exports.isSignedIn = expressJwt({
 exports.isAuthenticated = (req, res, next) => {
   // req.auth comes from express validator and req.profile comes from getUserById (middleware running before all user routes)
   let checker = req.profile && req.auth && req.profile._id == req.auth._id;
+  // id extracted from user's auth token should be same as id coming from req.params(i.e. "/:userId")
 
   if (!checker) {
     return res.status(403).json({
