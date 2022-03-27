@@ -158,6 +158,7 @@ exports.getAllUniqueCategories = (req, res) => {
   });
 };
 
+/** needs `order` object in `req`, decrements `Product` document's `stock` field and increments `sold` field */
 exports.updateStock = (req, res, next) => {
   let myOperations = req.body.order.products.map((prod) => {
     return {

@@ -46,6 +46,7 @@ exports.userPurchaseList = (req, res) => {
     });
 };
 
+/** needs `order` object in `req`, updates `User` document's `purchases` field */
 exports.pushOrderInPurchaseList = (req, res, next) => {
   let purchases = [];
   req.body.order.products.forEach((product) => {
