@@ -10,6 +10,9 @@ router.post(
     .isLength({ min: 3 })
     .withMessage("name must be atleast 3 characters"),
   body("email").isEmail().withMessage("invalid email"),
+  body("password")
+    .isLength({ min: 6 })
+    .withMessage("password should be of atleast 6 characters"),
   signup
 );
 
@@ -17,8 +20,8 @@ router.post(
   "/signin",
   body("email").isEmail().withMessage("email is required"),
   body("password")
-    .isLength({ min: 3 })
-    .withMessage("password field is required"),
+    .isLength({ min: 6 })
+    .withMessage("password should be of atleast 6 characters"),
   signin
 );
 
