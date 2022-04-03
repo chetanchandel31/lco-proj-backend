@@ -9,7 +9,7 @@ exports.signup = (req, res) => {
 
   if (!errors.isEmpty()) {
     // 422 error: server understands the content type of the request entity, and the syntax of the request entity is correct, but it was unable to process the contained instructions.
-    return res.status(422).json({ errors: errors.array() });
+    return res.status(422).json({ error: errors.array()[0]?.msg });
   }
 
   const user = new User(req.body);
@@ -17,7 +17,7 @@ exports.signup = (req, res) => {
   user.save((err, user) => {
     if (err) {
       console.log(err);
-      return res.status(400).json({ err: "not able to save user in db" });
+      return res.status(400).json({ error: "not able to save user in db" });
     }
 
     res.json(user);
@@ -31,7 +31,7 @@ exports.signin = (req, res) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    return res.status(422).json({ errors: errors.array() });
+    return res.status(422).json({ error: errors.array()[0]?.msg });
   }
 
   // can't return properly to end this function this way
