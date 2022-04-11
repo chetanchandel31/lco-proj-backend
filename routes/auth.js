@@ -18,10 +18,7 @@ router.post(
 
 router.post(
   "/signin",
-  body("email").isEmail().withMessage("email is required"),
-  body("password")
-    .isLength({ min: 6 })
-    .withMessage("password should be of atleast 6 characters"),
+  body("email").isEmail().withMessage("invalid email"),
   signin
 );
 
