@@ -29,7 +29,7 @@ exports.getCategory = () => {
   return res.json(req.category);
 };
 
-exports.getAllCategories = () => {
+exports.getAllCategories = (req, res) => {
   Category.find().exec((err, categories) => {
     if (err) {
       return res.status(400).json({
