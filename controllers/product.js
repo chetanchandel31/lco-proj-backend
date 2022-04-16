@@ -90,7 +90,7 @@ exports.deleteProduct = (req, res) => {
   });
 };
 
-exports.updateProduct = () => {
+exports.updateProduct = (req, res) => {
   let form = new formidable.IncomingForm();
   form.keepExtensions = true;
 
@@ -103,7 +103,7 @@ exports.updateProduct = () => {
 
     // update product
     let product = req.product;
-    product = _extend(product, fields); // same as { ...products, ...fields }
+    product = _.extend(product, fields); // same as { ...products, ...fields }
 
     // handle file here
     if (file.photo) {
