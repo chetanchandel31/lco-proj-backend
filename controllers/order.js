@@ -32,7 +32,7 @@ exports.getAllOrders = (req, res) => {
     .exec((err, orders) => {
       if (err) return res.status(400).json({ error: "no orders found in DB" });
 
-      res.json(order);
+      res.json(orders);
     });
 };
 
