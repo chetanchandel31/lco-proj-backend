@@ -31,6 +31,8 @@ app.use("/api", orderRoutes);
 app.use("/api", stripeRoutes);
 app.use("/api", brainTreeRoutes);
 
+app.get("/", (_req, res) => res.send("✅"));
+
 // memories app method for connecting db seems better
 mongoose
   .connect(process.env.DATABASE, {
