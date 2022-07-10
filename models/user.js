@@ -46,20 +46,20 @@ const userSchema = new mongoose.Schema(
 userSchema
   .virtual("password")
   .get(function () {
-    return this._password;
+    return this._password; // could be buggy
   })
   .set(function (password) {
     this._password = password;
     this.salt = uuidv4();
-    this.encry_password = this.securePassword(password);
+    this.encry_password = this.encryptPassword(password);
   });
 
 userSchema.methods = {
   authenticate: function (plainPassword) {
-    return this.securePassword(plainPassword) === this.encry_password;
+    return this.encryptPassword(plainPassword) === this.encry_password;
   },
 
-  securePassword: function (plainPassword) {
+  encryptPassword: function (plainPassword) {
     if (!plainPassword) return "";
     try {
       return crypto

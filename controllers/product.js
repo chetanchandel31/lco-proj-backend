@@ -44,8 +44,9 @@ exports.createProduct = (req, res) => {
           error: "file size too big",
         });
       }
-      product.photo.data = fs.readFileSync(file.photo.path);
-      product.photo.contentType = file.photo.type; // jpeg, png etc
+
+      product.photo.data = fs.readFileSync(file.photo.path); // type: Buffer
+      product.photo.contentType = file.photo.type; // type: string (jpeg, png) etc
     }
 
     // save to db
@@ -66,7 +67,6 @@ exports.getProduct = (req, res) => {
 };
 
 // middleware
-// TODO: check why middleware instead of simple controller
 exports.photo = (req, res, next) => {
   if (req.product.photo.data) {
     res.set("Content-Type", req.product.photo.contentType);
